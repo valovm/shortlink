@@ -27,13 +27,13 @@ RSpec.describe Links do
   describe 'Stats' do
 
     let(:code) { get_code.call valid_link }
+    let(:link) { Links::GetLink.call code }
     let(:ip_address) { '2.46.45.456'}
     let(:ip_address2) { '1.23.45.456'}
 
     it  do
-      2.times{  get_link.call(code, ip_address2) }
-      4.times{  get_link.call(code, ip_address) }
-      link = get_link.call(code, ip_address)
+      2.times{  Links::Stats.add_view(link, ip_address2) }
+      5.times{  Links::Stats.add_view(link, ip_address) }
 
       expect(link.url).to eq(valid_link)
       expect(link.url).not_to eq(valid_link2)

@@ -1,8 +1,9 @@
 module Links
   class GetLink
-    def self.call(code, ip = nil)
+
+    def self.call(code)
       link = Link.find_by code: code
-      Stats.add_view(link, ip) if link && ip
+      raise LinkNotFound unless link
 
       link
     end

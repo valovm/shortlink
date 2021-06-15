@@ -1,7 +1,7 @@
 module Links
   class GetCode
     def call(link)
-      raise 'invalid_link' unless check_url link
+      raise Error, 'invalid_link' unless check_url link
 
       en_link = Link.find_by url: URI(link).to_s
       return en_link.code if en_link
