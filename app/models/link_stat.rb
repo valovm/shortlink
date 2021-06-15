@@ -1,0 +1,2 @@
+class LinkStat < ApplicationRecord
+end
