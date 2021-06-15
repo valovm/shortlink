@@ -5,7 +5,7 @@ module Links
       COUNT_TRY_GENERATE_CODE: 2
   }
 
-  def config(key)
+  def self.config(key)
     @@default_config[key]
   end
 

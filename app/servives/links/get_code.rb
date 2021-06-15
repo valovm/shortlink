@@ -1,11 +1,12 @@
 module Links
   class GetCode
     def call(link)
-      link = check_url link
-      en_link = Link.find_by url: URI(link).to_s
-      return en_link if en_link
+      raise 'invalid_link' unless check_url link
 
-      generate_and_save link
+      en_link = Link.find_by url: URI(link).to_s
+      return en_link.code if en_link
+
+      generate_and_save(link).code
     end
 
     private
@@ -20,14 +21,13 @@ module Links
     end
 
     def check_url(link)
-      link = URI(link)
-      raise 'invalid_link' unless link.kind_of? URI::HTTP
-
-      link.to_s
+      URI.parse(link)
+    rescue => e
+      false
     end
 
     def generate_code(link)
-      Digest::SHA256.hexdigest(link)[0..Links.config(:SHORT_LINK_WIDTH)]
+      Digest::SHA256.hexdigest(link)[0... Links.config(:SHORT_LINK_WIDTH)]
     end
   end
 end

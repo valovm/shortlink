@@ -6,7 +6,7 @@ module Links
 
     def self.add_view(link, ip)
       LinkStat.transaction do
-        stat = LinkStat.find_or_initialize_by link: link, ip: ip
+        stat = LinkStat.find_or_initialize_by link: link, ip_address: ip
         stat.views += 1
         stat.save
       end
